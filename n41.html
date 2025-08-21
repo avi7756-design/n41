@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="robots" content="noindex" />
+  <title>GOLD v25.2 Pro+ – סוכן מציאות נדל"ן (Help Extended)</title>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/docx/8.0.2/docx.umd.min.js"></script>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    :root{--bg:#f5f7fa;--ink:#0f172a;--muted:#475569;--border:#d0d7e2;--primary:#2563eb;--ok:#22c55e;--warn:#f59e0b;--danger:#ef4444;--chip-bg:#e0e7ff;--chip-on:#4338ca;--gold:#eab308}
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;direction:rtl;background:var(--bg);color:var(--ink)}
+    header{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--border);z-index:40}
+    .topbar{display:flex;gap:10px;align-items:center;justify-content:space-between;padding:10px 16px}
+    .brand{display:flex;gap:10px;align-items:center}
+    .brand h1{font-size:1.05rem}
+    .ver{font:600 .85rem/1 ui-sans-serif;background:#eef2ff;border:1px solid #c7d2fe;color:#1e3a8a;border-radius:10px;padding:4px 8px}
+    .stamp{font-size:.8rem;color:var(--muted)}
+    #tools{display:flex;gap:8px;flex-wrap:wrap;padding:10px 16px;border-bottom:1px solid var(--border);background:#fff}
+    .btn{cursor:pointer;border:0;border-radius:18px;background:var(--primary);color:#fff;font-weight:700;padding:8px 14px}
+    .btn.alt{background:#0f766e}.btn.grey{background:#475569}.btn.warn{background:#ad6700}.btn.gold{background:#a16207}.btn.purple{background:#7c3aed}.btn.orange{background:#ea580c}
+    .panel{display:flex;flex-wrap:wrap;gap:12px;margin:12px 16px 18px}
+    .field{display:flex;flex-direction:column;gap:6px}
+    .field label{font-size:.9rem;font-weight:600;color:#374151}
+    input[type=text],select{border:1px solid var(--border);border-radius:8px;padding:6px 8px;background:#fff}
+    input[type=range]{flex:1}
+    .chip-box{display:flex;flex-wrap:wrap;gap:6px;background:#fff;border:1px solid var(--border);border-radius:10px;padding:8px;min-height:42px}
+    .chip{padding:5px 10px;border-radius:16px;font-size:.85rem;background:var(--chip-bg);color:#1e293b;cursor:pointer}
+    .chip.selected{background:var(--chip-on);color:#fff}
+    .grid{display:flex;flex-wrap:wrap;gap:20px;padding:0 16px}
+    .card{width:360px;background:#fff;border-radius:14px;padding:16px;border:2px solid var(--ok);box-shadow:0 4px 16px #0001}
+    .card.warn{border-color:var(--warn)}.card.err{border-color:var(--danger)}
+    .title{font-weight:800;margin-bottom:4px}
+    .addr{font-size:.92rem;color:#475569;margin-bottom:6px}
+    .intel{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+    .intel div{background:#f1f5f9;border-radius:8px;padding:6px 10px;font-size:.85rem}
+    .badge{display:inline-block;border-radius:11px;padding:2px 8px;font-size:.75rem;margin:6px 0}
+    .green{background:#e7fbe6;border:1px solid #22c55e;color:#166534}
+    .yellow{background:#fff5c2;border:1px solid #eab308;color:#854d0e}
+    .red{background:#ffe4e6;border:1px solid #ef4444;color:#991b1b}
+    .gold{color:var(--gold);font-weight:800}
+    .score{margin-top:6px;font-weight:800}
+    .reasons{font-size:.82rem;color:#334155;background:#f8fafc;border:1px dashed #cbd5e1;border-radius:10px;padding:8px;margin-top:6px}
+    .act-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+    .act{padding:6px 12px;border:none;border-radius:16px;font-size:.8rem;font-weight:700;color:#fff;background:var(--primary);cursor:pointer}
+    .act.fav{background:#ffb700;color:#222}.act.fav.on{background:#ff7f00;color:#fff}
+    .act.map{background:#8e24aa}.act.more{background:#0ea5e9}.act.print{background:#0f766e}
+    #gridEmpty{width:100%;text-align:center;color:#c92d00;font-size:1.05rem;margin:26px 0}
+
+    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.45);z-index:1000}
+    .modal.active{display:flex}
+    .modal .box{background:#fff;border-radius:14px;max-width:1000px;width:96vw;max-height:90vh;overflow:auto;box-shadow:0 10px 40px #0003;padding:22px 20px 26px}
+    .modal .close{position:sticky;top:0;float:left;background:none;border:none;font-size:1.6rem;line-height:1;color:#64748b;cursor:pointer}
+    .help h2{margin:0 0 8px;font-size:1.3rem;color:#0f172a}
+    .help p{margin:8px 0 12px;color:#334155}
+    .help .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .help .card{border:1px solid #e5e7eb;border-radius:12px;padding:12px;background:#fff}
+    .help .card h3{margin-bottom:6px;font-size:1rem;color:#111827}
+    .help ul{margin:0 0 0 1em}
+    .help li{margin:4px 0}
+    .help details{border:1px solid #e5e7eb;border-radius:12px;padding:10px 12px;background:#f8fafc;margin:10px 0}
+    .help summary{cursor:pointer;font-weight:700;color:#0f172a}
+    kbd{background:#e2e8f0;border:1px solid #cbd5e1;border-radius:6px;padding:1px 6px;font-family:ui-monospace,monospace;font-size:.85em}
+    @media(max-width:900px){.help .grid2{grid-template-columns:1fr}}
+
+    .vtable{width:100%;border-collapse:collapse;font-size:.9rem}
+    .vtable th,.vtable td{border-bottom:1px solid #e5e7eb;padding:8px 6px;text-align:right}
+    .pill{padding:2px 8px;border-radius:999px;font-size:.75rem;border:1px solid #e5e7eb;background:#f8fafc}
+    #selftest{max-width:1200px;margin:8px auto 0;padding:8px 12px;background:#eef2ff;border:1px solid #c7d2fe;border-radius:10px;color:#1e3a8a;font-size:.9rem}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="topbar">
+      <div class="brand">
+        <span style="font-size:1.4rem">🏠</span>
+        <h1>GOLD – סוכן מציאות נדל"ן · חזן אבי</h1>
+      </div>
+      <div class="verbar">
+        <span id="versionBadge" class="ver">v25.2</span>
+        <span id="buildStamp" class="stamp">—</span>
+        <button class="btn grey" id="verMgrBtn" title="ניהול גרסאות">ניהול גרסאות</button>
+      </div>
+    </div>
+    <div id="tools">
+      <button class="btn" id="searchBtn" title="במצב ידני: מריץ חיפוש">🔎 חפש</button>
+      <button class="btn grey" id="resetBtn" title="מאפס את כל המסננים">♻️ איפוס</button>
+      <button class="btn" id="printBtn" title="מדפיס את הכרטיסים">🖨️ הדפס</button>
+      <button class="btn alt" id="exportCsvBtn" title="ייצוא נתונים לקובץ CSV">🗂️ יצוא CSV</button>
+      <button class="btn alt" id="exportDocxBtn" title="ייצוא דוח Word">📄 יצוא DOCX</button>
+      <input type="file" id="fileInput" accept=".csv" style="display:none">
+      <button class="btn warn" id="importCsvBtn" title="טעינת נתונים מקובץ CSV">⬆️ טען CSV</button>
+      <button class="btn gold" id="test50Btn" title="בדיקת וריאציות ×50">🔬 וריאציות ×50</button>
+      <button class="btn" id="helpBtn" title="פתח עזרה">❓ עזרה</button>
+      <button class="btn" id="snapshotBtn" title="שמור גרסה נוכחית">💾 שמור גרסה</button>
+      <button class="btn purple" id="scoreBtn" title="הגדרת משקולות הציון">⚙️ משקולות ציון</button>
+      <button class="btn orange" id="netBtn" title="פרופיל הוצאות לתשואה נטו">🧮 תשואה נטו</button>
+      <button class="btn" id="relaxBtn" title="שחרור תנאים מדורג">🧩 Smart Relax</button>
+    </div>
+  </header>
+
+  <div class="panel">
+    <div class="field" style="flex:1 1 260px">
+      <label>אזור/עיר:</label>
+      <div id="chipBox" class="chip-box"></div>
+    </div>
+    <div class="field">
+      <label>חדרים:</label>
+      <select id="rooms">
+        <option value="">הכל</option><option>2</option><option>3</option><option>4</option><option>5</option>
+      </select>
+    </div>
+    <div class="field" style="flex:1 1 180px">
+      <label>מחיר עד (₪): <span id="pVal">800,000</span></label>
+      <input type="range" id="priceR" min="200000" max="2000000" step="50000" value="800000">
+    </div>
+    <div class="field" style="width:160px">
+      <label>תשואה מינ׳ (%): <span id="yVal">12</span></label>
+      <input type="range" id="yieldR" min="0" max="25" step="0.5" value="12">
+    </div>
+    <div class="field" style="flex:1 1 180px">
+      <label>מילות מפתח:</label>
+      <input id="kw" type="text" placeholder="חניה, משופצת, ים">
+    </div>
+    <div class="field">
+      <label>מיון:</label>
+      <select id="sort">
+        <option value="score">ציון ↓ (ברירת מחדל)</option>
+        <option value="gold">Gold → הנחה → תשואה</option>
+        <option value="yield">תשואה ↓</option>
+        <option value="discount">הנחה ↓</option>
+        <option value="price">מחיר ↑</option>
+        <option value="days">וותק ↑</option>
+      </select>
+    </div>
+    <div class="field" style="align-self:flex-end;display:flex;gap:12px;align-items:center">
+      <input type="checkbox" id="auto" checked>
+      <label for="auto" style="font-weight:700">אוטומטי</label>
+      <input type="checkbox" id="expandAreas" checked>
+      <label for="expandAreas" title="אם אין אזור נבחר – משתמש בכל האזורים">הרחב אזורים</label>
+    </div>
+  </div>
+
+  <div id="grid" class="grid"></div>
+  <div id="gridEmpty" style="display:none">אין תוצאות. נסו להריץ <b>Smart Relax</b> או לשנות ספים.</div>
+
+  <!-- Help Modal (EXTENDED) -->
+  <div id="helpModal" class="modal" aria-hidden="true">
+    <div class="box">
+      <button class="close" title="סגור" onclick="closeHelp()">×</button>
+      <div class="help" role="dialog" aria-modal="true" aria-labelledby="helpTitle">
+        <h2 id="helpTitle">מרכז עזרה – GOLD v25.2 Pro+</h2>
+        <p class="stamp">נבנה עבור משתמשים ללא ניסיון קודם. כל פעולה מתועדת כאן, כולל מה חדש בגרסה זו.</p>
+
+        <details open>
+          <summary>🆕 מה חדש ב־v25.2</summary>
+          <ul>
+            <li><b>עזרה מורחבת</b> – מדריך מלא, שאלות נפוצות וטיפים.</li>
+            <li><b>Tooltips</b> לכל כפתור בסרגל העליון.</li>
+            <li><b>ברירת מחדל מיון לפי ציון</b> (מנוע ציון משוקלל).</li>
+            <li><b>Smart Relax</b> מציג יומן צעדים מפורט לפני החלת השינויים.</li>
+          </ul>
+        </details>
+
+        <details open>
+          <summary>🚀 התחלה מהירה</summary>
+          <ol style="margin:8px 0 0 1em">
+            <li>בחרו אזורים (או השאירו ריק עם <b>הרחב אזורים</b> ✓).</li>
+            <li>כווננו <b>מחיר עד</b> ו־<b>תשואה מינ׳</b>.</li>
+            <li>השאירו <b>אוטומטי</b> ✓ לעדכון מיידי, או בטלו וסמנו <b>🔎 חפש</b> ידנית.</li>
+          </ol>
+        </details>
+
+        <details open>
+          <summary>🧠 מנוע ציון (0–100) + סיבות ציון</summary>
+          <p>הציון משקלל: <b>הנחה</b>, <b>תשואה</b>, <b>מחיר (נמוך=טוב)</b>, <b>אימות מוכר</b>, <b>וותק</b>, ו<b>תשואה נטו</b>. המשקולות ניתנות לשינוי ב־<b>⚙️ משקולות ציון</b>. בכל כרטיס תוצג תיבת <b>סיבות הציון</b> עם פירוט התרומה של כל רכיב.</p>
+          <ul>
+            <li>ברירות־מחדל: תשואה 6, הנחה 5, נטו 5, מחיר 2, מוכר 1, ותק 1.</li>
+            <li>טיפ: העלו משקל "נטו" כשיש פרופיל הוצאות רלוונטי.</li>
+          </ul>
+        </details>
+
+        <details open>
+          <summary>🧮 תשואה נטו – פרופיל הוצאות</summary>
+          <p>פתחו <b>🧮 תשואה נטו</b> כדי להגדיר: ניהול (% הכנסה), ריקון, תחזוקה (% מהמחיר), מסים, הוצאות קבועות ושיפוץ חד־פעמי. החישוב מעודכן מיד ומשפיע על הציון.</p>
+        </details>
+
+        <details open>
+          <summary>🧩 Smart Relax – שחרור תנאים מדורג</summary>
+          <p>אין תוצאות? הלחצו <b>🧩 Smart Relax</b>. החלון יציג את שלבי השחרור (תשואה↓, מחיר↑, ביטול חדרים/מילות מפתח, הרחבת אזורים). לאחר צפיה – לחצו <b>החל שינויים</b>.</p>
+        </details>
+
+        <details>
+          <summary>🗂️ נתונים: CSV / DOCX</summary>
+          <ul>
+            <li><b>⬆️ טען CSV</b> – כותרות נדרשות: id,area,title,addr,price,val,disc,yld,rooms,pub,kw</li>
+            <li><b>🗂️ יצוא CSV</b> – לשיתוף/גיבוי.</li>
+            <li><b>📄 יצוא DOCX</b> – דו"ח Word כולל נתוני נטו וציון.</li>
+          </ul>
+        </details>
+
+        <details>
+          <summary>💾 ניהול גרסאות</summary>
+          <p>שומר את <b>הגדרות המסננים</b> + <b>הדאטה</b> (LocalStorage). ניתן לייצא/לייבא JSON, לשחזר ולמחוק גרסאות.</p>
+        </details>
+
+        <details>
+          <summary>🔬 וריאציות ×50 – בדיקת תקינות</summary>
+          <p>מריץ 50 קומבינציות של מסננים ומתריע אם יש מעט שונות בתוצאות (חסינות לקפיאה/באגי סינון).</p>
+        </details>
+
+        <details>
+          <summary>⭐ שמירה ומועדפים</summary>
+          <p>כפתור <b>🤍/💛 שמור</b> בכל כרטיס שומר בלוקאל סטורג' ומדגיש בכרטיס.</p>
+        </details>
+
+        <details>
+          <summary>⌨️ קיצורים</summary>
+          <ul>
+            <li><kbd>?</kbd> או <kbd>H</kbd> – פתיחת עזרה</li>
+            <li><kbd>Esc</kbd> – סגירת חלון עזרה/ניהול/משקולות/נטו/Relax</li>
+          </ul>
+        </details>
+
+        <details>
+          <summary>🧯 תקלות נפוצות</summary>
+          <ul>
+            <li>לא יוצאות תוצאות? הפעילו <b>Smart Relax</b> או בדקו שהמסננים לא נוקשים מדי.</li>
+            <li>ייצוא DOCX לא עובד? ודאו חיבור אינטרנט ל־CDN ופתחו הרשאת פופ־אפים.</li>
+            <li>הדפדפן "קפוא"? ריענון קשיח (Ctrl+F5) וניקוי Cache במובייל.</li>
+          </ul>
+        </details>
+
+        <details>
+          <summary>🔐 פרטיות ואחסון</summary>
+          <p>כל המידע נשמר מקומית (LocalStorage). אין שליחה לשרת. מומלץ ייצוא גיבוי JSON/CSV.</p>
+        </details>
+      </div>
+    </div>
+  </div>
+
+  <!-- Version Manager Modal -->
+  <div id="verModal" class="modal" aria-hidden="true">
+    <div class="box">
+      <button class="close" title="סגור" onclick="closeVerMgr()">×</button>
+      <h2 style="margin-bottom:10px">ניהול גרסאות – שיחזור בלחיצה</h2>
+      <p class="stamp">LocalStorage בלבד. אפשר לייצא/לייבא JSON.</p>
+      <div style="display:flex;gap:8px;margin:8px 0 12px">
+        <button class="btn" onclick="saveSnapshot()">💾 שמור גרסה נוכחית</button>
+        <button class="btn alt" onclick="exportSnapshots()">⬇️ יצוא גרסאות</button>
+        <input type="file" id="verFile" accept="application/json" style="display:none"/>
+        <button class="btn warn" onclick="document.getElementById('verFile').click()">⬆️ ייבוא גרסאות</button>
+      </div>
+      <table class="vtable" id="verTable">
+        <thead><tr><th>שם</th><th>גרסה</th><th>חותמת זמן</th><th>נתונים</th><th>פעולות</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Scoring Modal -->
+  <div id="scoreModal" class="modal" aria-hidden="true">
+    <div class="box">
+      <button class="close" title="סגור" onclick="closeScore()">×</button>
+      <h2>⚙️ משקולות ציון (0–10 לכל פרמטר)</h2>
+      <div class="help" style="margin:6px 0 10px;color:#334155">ברירת מחדל מומלצת: תשואה 6, הנחה 5, נטו 5, מחיר 2, מוכר 1, ותק 1.</div>
+      <div class="help grid2" style="margin-top:4px">
+        <div>
+          <label>הנחה (disc): <b id="wDiscVal">5</b></label>
+          <input type="range" id="wDisc" min="0" max="10" step="1" value="5">
+        </div>
+        <div>
+          <label>תשואה (yld): <b id="wYldVal">6</b></label>
+          <input type="range" id="wYld" min="0" max="10" step="1" value="6">
+        </div>
+        <div>
+          <label>מחיר (נמוך=טוב): <b id="wPriceVal">2</b></label>
+          <input type="range" id="wPrice" min="0" max="10" step="1" value="2">
+        </div>
+        <div>
+          <label>אימות מוכר: <b id="wSellerVal">1</b></label>
+          <input type="range" id="wSeller" min="0" max="10" step="1" value="1">
+        </div>
+        <div>
+          <label>וותק פרסום (חדש=טוב): <b id="wRecencyVal">1</b></label>
+          <input type="range" id="wRecency" min="0" max="10" step="1" value="1">
+        </div>
+        <div>
+          <label>תשואה נטו: <b id="wNetVal">5</b></label>
+          <input type="range" id="wNet" min="0" max="10" step="1" value="5">
+        </div>
+      </div>
+      <div style="margin-top:12px;display:flex;gap:8px">
+        <button class="btn" onclick="applyWeights()">שמור משקולות</button>
+        <button class="btn grey" onclick="resetWeights()">איפוס</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Net Yield Modal -->
+  <div id="netModal" class="modal" aria-hidden="true">
+    <div class="box">
+      <button class="close" title="סגור" onclick="closeNet()">×</button>
+      <h2>🧮 פרופיל הוצאות – תשואה נטו</h2>
+      <div class="grid2" style="margin-top:10px">
+        <div>
+          <label>ניהול (% מההכנסה):</label>
+          <input type="number" id="pMgmt" value="7" min="0" max="50">
+        </div>
+        <div>
+          <label>ריקון/Vacancy (% מההכנסה):</label>
+          <input type="number" id="pVac" value="5" min="0" max="50">
+        </div>
+        <div>
+          <label>תחזוקה שנתית (% מהמחיר):</label>
+          <input type="number" id="pMaint" value="1.5" min="0" max="20" step="0.1">
+        </div>
+        <div>
+          <label>ארנונה/מסים (% מההכנסה):</label>
+          <input type="number" id="pTax" value="0" min="0" max="50">
+        </div>
+        <div>
+          <label>אחרות קבועות (₪/שנה):</label>
+          <input type="number" id="fixedAnnual" value="0" min="0" step="100">
+        </div>
+        <div>
+          <label>שיפוץ חד־פעמי (₪):</label>
+          <input type="number" id="renoOnce" value="0" min="0" step="1000">
+        </div>
+      </div>
+      <p style="margin-top:8px;color:#334155">חישוב (שנתי): הכנסה ברוטו = מחיר×(תשואה/100). נטו = הכנסה×(1−ניהול−ריקון−מסים) − (מחיר×תחזוקה%) − אחרות − פחת שיפוץ (לא נכלל ברירת־מחדל).</p>
+      <div style="margin-top:12px;display:flex;gap:8px">
+        <button class="btn" onclick="saveExpenses()">שמור פרופיל</button>
+        <button class="btn grey" onclick="resetExpenses()">איפוס ברירות־מחדל</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Smart Relax Modal -->
+  <div id="relaxModal" class="modal" aria-hidden="true">
+    <div class="box">
+      <button class="close" title="סגור" onclick="closeRelax()">×</button>
+      <h2>🧩 Smart Relax – שחרור תנאים מדורג</h2>
+      <ol id="relaxLog" style="margin:8px 0 0 1em"></ol>
+      <div style="margin-top:12px;display:flex;gap:8px">
+        <button class="btn" onclick="applyRelaxed()">החל שינויים</button>
+        <button class="btn grey" onclick="closeRelax()">ביטול</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Seed Data -->
+  <script id="seed" type="application/json">[
+    {"id":1,"area":"חיפה","title":"דירת 3 ח' – הדר","addr":"הרצל 89, חיפה","price":480000,"val":630000,"disc":24,"yld":14.8,"rooms":3,"pub":"2025-08-15","seller":{"name":"רחל לוי","phone":"03-5555555","ok":true},"kw":"חניה תמא"},
+    {"id":2,"area":"קרית אתא","title":"דירת 4 ח' – קרית אתא","addr":"האורן 15","price":690000,"val":920000,"disc":25,"yld":13.2,"rooms":4,"pub":"2025-08-10","seller":{"name":"משה כהן","phone":"054-1234567","ok":true},"kw":"תחבורה חניה"},
+    {"id":3,"area":"נהריה","title":"קוטג' 5 ח' – נהריה","addr":"הנרקיס 8","price":1100000,"val":1300000,"disc":15,"yld":9.5,"rooms":5,"pub":"2025-07-01","seller":{"name":"משפחת לוי","phone":"053-2223333","ok":false},"kw":"גינה"},
+    {"id":4,"area":"עכו","title":"דירת 2 ח' – עכו העתיקה","addr":"סמטת הדייגים 5, עכו","price":390000,"val":550000,"disc":29,"yld":15.1,"rooms":2,"pub":"2025-08-18","seller":{"name":"אלירן שקד","phone":"058-8889999","ok":true},"kw":"Airbnb ים"},
+    {"id":5,"area":"נוף הגליל","title":"דירת 3 ח' – נוף הגליל","addr":"מבצע יואב 12","price":540000,"val":720000,"disc":25,"yld":12.5,"rooms":3,"pub":"2025-08-05","seller":{"name":"יוכי לוי","phone":"050-1112222","ok":true},"kw":"משופצת חניה"}
+  ]</script>
+
+  <div id="selftest" style="display:none"></div>
+
+<script>
+"use strict";
+/* ===== Globals first! ===== */
+const APP_VERSION = "v25.2";
+const LS_KEY = "gold_snapshots_v1";
+const LS_W = "gold_weights_v1";
+const LS_EXP = "gold_expenses_v1";
+const BUILD_AT = new Date();
+
+const versionBadge = document.getElementById('versionBadge');
+const buildStamp = document.getElementById('buildStamp');
+versionBadge.textContent = APP_VERSION;
+buildStamp.textContent = 'נבנה: ' + BUILD_AT.toLocaleString('he-IL');
+
+function baseData(){ try{ return JSON.parse(document.getElementById('seed').textContent); } catch(e){ console.error(e); return []; } }
+let items = baseData();
+
+const qs=id=>document.getElementById(id);
+const chipBox=qs('chipBox'), grid=qs('grid'), gridEmpty=qs('gridEmpty');
+const rooms=qs('rooms'), priceR=qs('priceR'), yieldR=qs('yieldR'), kw=qs('kw'), sortSel=qs('sort');
+const pVal=qs('pVal'), yVal=qs('yVal'), autoCB=qs('auto'), expandAreasCB=qs('expandAreas');
+const searchBtn=qs('searchBtn'), resetBtn=qs('resetBtn'), printBtn=qs('printBtn'), test50Btn=qs('test50Btn');
+const importCsvBtn=qs('importCsvBtn'), exportCsvBtn=qs('exportCsvBtn'), exportDocxBtn=qs('exportDocxBtn'), fileInput=qs('fileInput');
+const helpBtn=qs('helpBtn'), helpModal=qs('helpModal');
+const verMgrBtn=qs('verMgrBtn'), verModal=qs('verModal');
+const snapshotBtn=qs('snapshotBtn');
+const scoreBtn=qs('scoreBtn'), scoreModal=qs('scoreModal');
+const netBtn=qs('netBtn'), netModal=qs('netModal');
+const relaxBtn=qs('relaxBtn'), relaxModal=qs('relaxModal'), relaxLog=qs('relaxLog');
+const selfTestBox=qs('selftest');
+
+const allAreas=["חיפה","קרית אתא","קרית ביאליק","קרית ים","קרית מוצקין","נהריה","עכו","נוף הגליל","טבריה","צפת","כרמיאל","שלומי","שפרעם","תל אביב"];
+let selectedAreas=[];
+let favs = JSON.parse(localStorage.getItem('favs')||'[]');
+let debT=null;
+
+/* Weights (defaults tuned) */
+let W = Object.assign({disc:5,yld:6,price:2,seller:1,recency:1,net:5}, JSON.parse(localStorage.getItem(LS_W)||'{}'));
+
+/* Expense Profile */
+let EXP = Object.assign({mgmt:7,vac:5,maint:1.5,tax:0,fixed:0,reno:0}, JSON.parse(localStorage.getItem(LS_EXP)||'{}'));
+
+/* toggleArea before chips */
+function toggleArea(el){
+  const a = el.getAttribute('data-area');
+  if(selectedAreas.includes(a)){ selectedAreas = selectedAreas.filter(x=>x!==a); el.classList.remove('selected'); }
+  else { selectedAreas.push(a); el.classList.add('selected'); }
+  if(autoCB && autoCB.checked) render(false);
+}
+window.toggleArea=toggleArea;
+
+initChips();
+bindUI();
+render();
+seedSnapshotsOnce();
+refreshVerTable();
+
+function bindUI(){
+  pVal.textContent = Number(priceR.value).toLocaleString();
+  yVal.textContent = yieldR.value;
+  [rooms, priceR, yieldR, kw, sortSel].forEach(el=>{ el.addEventListener('input', onInputChanged); el.addEventListener('change', onInputChanged); });
+  searchBtn.addEventListener('click', ()=>render(true));
+  resetBtn.addEventListener('click', resetFilters);
+  printBtn.addEventListener('click', ()=>window.print());
+  importCsvBtn.addEventListener('click', ()=>fileInput.click());
+  fileInput.addEventListener('change', importCSV);
+  exportCsvBtn.addEventListener('click', exportCSV);
+  exportDocxBtn.addEventListener('click', exportDOCX);
+  test50Btn.addEventListener('click', run50Variations);
+  helpBtn.addEventListener('click', openHelp);
+  verMgrBtn.addEventListener('click', openVerMgr);
+  snapshotBtn.addEventListener('click', saveSnapshot);
+  scoreBtn.addEventListener('click', openScore);
+  netBtn.addEventListener('click', openNet);
+  relaxBtn.addEventListener('click', smartRelax);
+  document.addEventListener('keydown',(e)=>{ const k=(e.key||'').toLowerCase(); if(k==='escape'){ closeHelp(); closeVerMgr(); closeScore(); closeNet(); closeRelax(); } if(k==='?'||k==='h'){ openHelp(); } });
+  setTimeout(runSelfTests, 80);
+}
+
+function onInputChanged(e){
+  if(e.target===priceR) pVal.textContent = Number(priceR.value).toLocaleString();
+  if(e.target===yieldR) yVal.textContent = yieldR.value;
+  if(autoCB.checked){ clearTimeout(debT); debT=setTimeout(()=>render(false),250); }
+}
+
+function initChips(){ chipBox.innerHTML = allAreas.map(a=>`<span class="chip" data-area="${a}" onclick="toggleArea(this)">${a}</span>`).join(''); }
+
+/* ===== Scoring ===== */
+function normDisc(x){ return Math.min(Math.max((x||0),0),50)/50; }
+function normYld(x){ return Math.min(Math.max((x||0),0),25)/25; }
+function normPrice(p,maxP){ const r=Math.min((p||0)/Math.max(maxP,1),1); return 1-r; }
+function normRecency(pub){ const days = Math.max(0, Math.floor((Date.now()-new Date(pub))/86400000)); return 1 - Math.min(days/60,1); }
+function sellerOk(s){ return s && s.ok ? 1 : 0; }
+
+function netYieldPercent(p){
+  const price = p.price||0; const gross = price*( (p.yld||0)/100 );
+  const afterInc = gross*(1 - (EXP.mgmt||0)/100 - (EXP.vac||0)/100 - (EXP.tax||0)/100);
+  const afterMaint = afterInc - price*( (EXP.maint||0)/100 );
+  const netAnnual = Math.max(0, afterMaint - (EXP.fixed||0));
+  const netPct = price>0 ? (netAnnual/price)*100 : 0;
+  return +netPct.toFixed(2);
+}
+
+function scoreOf(p){
+  const maxP = Number(priceR.value)||1000000;
+  const parts = {
+    disc: W.disc * normDisc(p.disc),
+    yld:  W.yld  * normYld(p.yld),
+    price:W.price* normPrice(p.price,maxP),
+    seller:W.seller* sellerOk(p.seller),
+    recency:W.recency* normRecency(p.pub),
+    net:  W.net  * normYld(netYieldPercent(p))
+  };
+  const sumW = W.disc+W.yld+W.price+W.seller+W.recency+W.net || 1;
+  const raw = (parts.disc + parts.yld + parts.price + parts.seller + parts.recency + parts.net) / sumW * 100;
+  return {score:+raw.toFixed(1), parts};
+}
+
+function reasonsHTML(p,parts){
+  function fmt(name,val){ return `<li>${name}: <b>${val.toFixed(2)}</b></li>`; }
+  return `<ul>
+    ${fmt('הנחה',parts.disc)}
+    ${fmt('תשואה',parts.yld)}
+    ${fmt('מחיר',parts.price)}
+    ${fmt('אימות מוכר',parts.seller)}
+    ${fmt('וותק',parts.recency)}
+    ${fmt('תשואה נטו',parts.net)}
+  </ul>`;
+}
+
+/* ===== Render ===== */
+function hasGold(p){ return (p.disc||0)>=30 || (p.yld||0)>=12; }
+function badge(p){ if(!p.seller||!p.seller.ok) return '<span class="badge red">מוכר לא אומת</span>'; if((p.disc||0)<25||(p.yld||0)<12) return '<span class="badge yellow">גבולי</span>'; return '<span class="badge green">מאומת</span>'; }
+
+function card(p){
+  const sc = scoreOf(p); const net = netYieldPercent(p);
+  const cls = (!p.seller||!p.seller.ok) ? 'err' : (((p.disc||0)<25||(p.yld||0)<12) ? 'warn' : '');
+  const days = Math.floor((Date.now() - new Date(p.pub)) / 86400000);
+  const favOn = favs.includes(p.id);
+  return `<div class="card ${cls}">
+    <div class="title">${p.title} <span style="font-size:.85rem;color:#64748b">(${p.rooms}ח')</span></div>
+    <div class="addr">${p.addr}</div>
+    ${hasGold(p)?'<div class="gold">🏆 עסקת זהב</div>':''}
+    <div>${badge(p)} <small style="color:#64748b"> | ${p.pub} • ${days} ימים</small></div>
+    <div class="intel">
+      <div>מחיר<br><b>${(p.price||0).toLocaleString()} ₪</b></div>
+      <div>הנחה<br><b>${p.disc||0}%</b></div>
+      <div>תשואה (ברוטו)<br><b>${p.yld||0}%</b></div>
+      <div>תשואה נטו*<br><b>${net}%</b></div>
+    </div>
+    <div class="score">ציון: <span>${sc.score}</span> / 100</div>
+    <div class="reasons">סיבות הציון:${reasonsHTML(p,sc.parts)}</div>
+    <div class="act-row">
+      <button class="act fav ${favOn?'on':''}" onclick="toggleFav(${p.id})">${favOn?'💛':'🤍'} שמור</button>
+      <button class="act map" onclick="openMap('${(p.addr||'').replace(/"/g,'')}')">מפה</button>
+      <button class="act more" onclick="openDetails(${p.id})">עוד</button>
+      <button class="act print" onclick="printOne(${p.id})">הדפס</button>
+    </div>
+  </div>`;
+}
+
+function render(bySearchButton){
+  const maxPrice = Number(priceR.value);
+  const minYield = Number(yieldR.value);
+  const roomF = (rooms.value||'').trim();
+  const kwStr = (kw.value||'').trim().toLowerCase();
+
+  const areasActive = selectedAreas.length ? selectedAreas : (expandAreasCB.checked ? allAreas : []);
+
+  let res = items.filter(p =>
+    (!areasActive.length || areasActive.includes(p.area)) &&
+    (!roomF || String(p.rooms)===roomF) &&
+    (p.price||0) <= maxPrice &&
+    (p.yld||0) >= minYield &&
+    (!kwStr || (`${p.title} ${p.addr} ${p.kw||''}`).toLowerCase().includes(kwStr))
+  );
+
+  res.sort((a,b)=>{
+    switch(sortSel.value){
+      case 'score': return scoreOf(b).score - scoreOf(a).score;
+      case 'yield': return (b.yld||0)-(a.yld||0);
+      case 'discount': return (b.disc||0)-(a.disc||0);
+      case 'price': return (a.price||0)-(b.price||0);
+      case 'days': return new Date(a.pub)-new Date(b.pub);
+      default: return (hasGold(b)?1:0)-(hasGold(a)?1:0) || (b.disc||0)-(a.disc||0) || (b.yld||0)-(a.yld||0);
+    }
+  });
+
+  grid.innerHTML = res.map(card).join('');
+  gridEmpty.style.display = res.length ? 'none' : 'block';
+  if(bySearchButton===true && !autoCB.checked){ console.log('Manual search run completed.'); }
+}
+
+/* ===== Fav/Info ===== */
+function toggleFav(id){ const i=favs.indexOf(id); if(i>=0) favs.splice(i,1); else favs.push(id); localStorage.setItem('favs',JSON.stringify(favs)); render(false); }
+function openDetails(id){ const p=items.find(x=>x.id===id)||{}; const msg=[`כתובת: ${p.addr||''}`,`מחיר: ${(p.price||0).toLocaleString()} ₪`,`הנחה: ${p.disc||0}% | תשואה: ${p.yld||0}% | נטו*: ${netYieldPercent(p)}%`,`מוכר: ${(p.seller?.name||'-')} – ${(p.seller?.phone||'')}${(p.seller?.ok?'':' (לא אומת)')}`].join('\n'); alert((p.title||'נכס')+'\n\n'+msg); }
+function openMap(addr){ window.open('https://maps.google.com/?q='+encodeURIComponent(addr||''),'_blank'); }
+function printOne(id){ const p=items.find(x=>x.id===id)||{}; const w=window.open('',''); w.document.write(`<h2>${p.title||''}</h2><p>${p.addr||''}</p><p>מחיר: ${(p.price||0).toLocaleString()} ₪</p>`); w.print(); w.close(); }
+window.toggleFav=toggleFav; window.openDetails=openDetails; window.openMap=openMap; window.printOne=printOne;
+
+/* ===== CSV IN/OUT ===== */
+function num(v){ const n=Number(String(v||'').replace(/[^\d.]/g,'')); return isFinite(n)?n:0; }
+function importCSV(e){ const f=e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=ev=>{ try{ const csv=String(ev.target.result||'').replace(/^\uFEFF/,'').trim(); const rows=csv.split(/\r?\n/).map(line=>line.split(',')); const head=(rows.shift()||[]).map(h=>h.trim()); const idx=name=>head.indexOf(name); const ix={id:idx('id'),area:idx('area'),title:idx('title'),addr:idx('addr'),price:idx('price'),val:idx('val'),disc:idx('disc'),yld:idx('yld'),rooms:idx('rooms'),pub:idx('pub'),kw:idx('kw')}; items = rows.map(rw=>({ id:num(rw[ix.id]), area:rw[ix.area]||'', title:rw[ix.title]||'', addr:rw[ix.addr]||'', price:num(rw[ix.price]), val:num(rw[ix.val]), disc:num(rw[ix.disc]), yld:num(rw[ix.yld]), rooms:num(rw[ix.rooms]), pub:rw[ix.pub]||'', seller:{name:'-',phone:'',ok:true}, kw:rw[ix.kw]||'' })); render(false); alert('CSV נטען ('+items.length+' רשומות).'); }catch(err){ alert('שגיאה בטעינת CSV: '+(err.message||err)); } }; r.readAsText(f,'utf-8'); }
+function exportCSV(){ const head=['id','area','title','addr','price','val','disc','yld','rooms','pub','kw']; const rows=[head].concat(items.map(p=>head.map(k=>p[k]??''))); const csv='\uFEFF'+rows.map(r=>r.join(',')).join('\n'); const blob=new Blob([csv],{type:'text/csv;charset=utf-8'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='deals.csv'; a.click(); }
+function exportDOCX(){ try{ const {Document,Packer,Paragraph,TextRun,HeadingLevel}=docx; const deals=items.slice(); const children=[ new Paragraph({text:'דו"ח עסקאות – GOLD '+APP_VERSION,heading:HeadingLevel.TITLE,rtl:true}) ]; deals.forEach(p=>children.push(new Paragraph({rtl:true,children:[new TextRun({text:`• ${p.title} | ${p.addr} | ₪${(p.price||0).toLocaleString()} | ${p.disc||0}% | ${p.yld||0}% | נטו*: ${netYieldPercent(p)}%`,bold:hasGold(p)})]}))); const doc=new Document({sections:[{children}]}); Packer.toBlob(doc).then(b=>{ const a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download='deals_'+APP_VERSION+'.docx'; a.click(); }); }catch(e){ alert('שגיאה ביצוא DOCX: '+(e.message||e)); } }
+
+/* ===== Help ===== */
+function openHelp(){ helpModal.classList.add('active'); helpModal.setAttribute('aria-hidden','false'); }
+function closeHelp(){ helpModal.classList.remove('active'); helpModal.setAttribute('aria-hidden','true'); }
+window.openHelp=openHelp; window.closeHelp=closeHelp;
+
+/* ===== Version Manager ===== */
+function seedSnapshotsOnce(){ const ex=JSON.parse(localStorage.getItem(LS_KEY)||'[]'); if(ex.length) return; const base={name:'v24 Clean',version:'v24.0',at:new Date().toISOString(),settings:getSettings(),seed:baseData()}; const pro={name:'v24 Pro',version:'v24.1',at:new Date().toISOString(),settings:getSettings(),seed:baseData()}; localStorage.setItem(LS_KEY, JSON.stringify([base,pro])); }
+function getSettings(){ return { rooms:rooms.value, price:+priceR.value, yield:+yieldR.value, kw:kw.value, sort:sortSel.value, areas:[...selectedAreas], auto:autoCB.checked, expand:expandAreasCB.checked, weights:W, expenses:EXP, appVersion:APP_VERSION, build:BUILD_AT.toISOString() }; }
+function applySettings(s){ rooms.value=s.rooms||''; priceR.value=s.price||800000; pVal.textContent=Number(priceR.value).toLocaleString(); yieldR.value=s.yield||12; yVal.textContent=String(yieldR.value); kw.value=s.kw||''; sortSel.value=s.sort||'score'; selectedAreas=[...(s.areas||[])]; document.querySelectorAll('#chipBox .chip').forEach(ch=>{ const a=ch.getAttribute('data-area'); if(selectedAreas.includes(a)) ch.classList.add('selected'); else ch.classList.remove('selected'); }); autoCB.checked=!!s.auto; expandAreasCB.checked=!!s.expand; if(s.weights){ W=Object.assign(W,s.weights); syncWeightsUI(); } if(s.expenses){ EXP=Object.assign(EXP,s.expenses); syncExpensesUI(); } }
+function saveSnapshot(){ const list=JSON.parse(localStorage.getItem(LS_KEY)||'[]'); const name=prompt('שם גרסה (למשל: v25 – משקולות מותאמות)','v25.2 Pro+'); if(!name) return; const snap={ name, version:APP_VERSION, at:new Date().toISOString(), settings:getSettings(), seed:items }; list.unshift(snap); localStorage.setItem(LS_KEY, JSON.stringify(list)); refreshVerTable(); alert('נשמרה גרסה: '+name); }
+function refreshVerTable(){ const tb=document.querySelector('#verTable tbody'); const list=JSON.parse(localStorage.getItem(LS_KEY)||'[]'); tb.innerHTML = list.map((s,i)=>`<tr><td>${s.name}</td><td><span class="pill">${s.version||'-'}</span></td><td>${new Date(s.at).toLocaleString('he-IL')}</td><td>${(s.seed&&s.seed.length)||0}</td><td><button class="btn" onclick="restoreSnap(${i})">שחזר</button> <button class="btn grey" onclick="downloadSnap(${i})">ייצא</button> <button class="btn warn" onclick="deleteSnap(${i})">מחק</button></td></tr>`).join(''); }
+function openVerMgr(){ verModal.classList.add('active'); verModal.setAttribute('aria-hidden','false'); refreshVerTable(); const f=document.getElementById('verFile'); f.onchange=(e)=>{ const file=e.target.files[0]; if(!file) return; const r=new FileReader(); r.onload=ev=>{ try{ const arr=JSON.parse(String(ev.target.result||'[]')); if(!Array.isArray(arr)) throw new Error('קובץ לא תקין'); const cur=JSON.parse(localStorage.getItem(LS_KEY)||'[]'); localStorage.setItem(LS_KEY, JSON.stringify(arr.concat(cur))); refreshVerTable(); alert('יובאו '+arr.length+' גרסאות.'); }catch(err){ alert('שגיאה בייבוא: '+(err.message||err)); } }; r.readAsText(file,'utf-8'); } }
+function closeVerMgr(){ verModal.classList.remove('active'); verModal.setAttribute('aria-hidden','true'); }
+function exportSnapshots(){ const list=JSON.parse(localStorage.getItem(LS_KEY)||'[]'); const blob=new Blob([JSON.stringify(list,null,2)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='gold_snapshots.json'; a.click(); }
+function downloadSnap(i){ const list=JSON.parse(localStorage.getItem(LS_KEY)||'[]'); const s=list[i]; const blob=new Blob([JSON.stringify(s,null,2)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=(s?.name||('snap_'+i))+'.json'; a.click(); }
+function restoreSnap(i){ const list=JSON.parse(localStorage.getItem(LS_KEY)||'[]'); const s=list[i]; if(!s) return; items = s.seed||[]; applySettings(s.settings||{}); render(false); alert('שוחזרה גרסה: '+(s.name||('מס׳ '+i))); }
+function deleteSnap(i){ const list=JSON.parse(localStorage.getItem(LS_KEY)||'[]'); if(!confirm('למחוק גרסה זו?')) return; list.splice(i,1); localStorage.setItem(LS_KEY, JSON.stringify(list)); refreshVerTable(); }
+window.openVerMgr=openVerMgr; window.closeVerMgr=closeVerMgr; window.restoreSnap=restoreSnap; window.deleteSnap=deleteSnap; window.exportSnapshots=exportSnapshots;
+
+/* ===== Weight Modal ===== */
+function openScore(){ syncWeightsUI(); scoreModal.classList.add('active'); scoreModal.setAttribute('aria-hidden','false'); }
+function closeScore(){ scoreModal.classList.remove('active'); scoreModal.setAttribute('aria-hidden','true'); }
+function syncWeightsUI(){ qs('wDisc').value=W.disc; qs('wYld').value=W.yld; qs('wPrice').value=W.price; qs('wSeller').value=W.seller; qs('wRecency').value=W.recency; qs('wNet').value=W.net; ['Disc','Yld','Price','Seller','Recency','Net'].forEach(k=>{ qs('w'+k+'Val').textContent=qs('w'+k).value; }); }
+['wDisc','wYld','wPrice','wSeller','wRecency','wNet'].forEach(id=>{ document.addEventListener('input', (e)=>{ if(e.target&&e.target.id===id){ qs(id+'Val').textContent=e.target.value; } }); });
+function applyWeights(){ W={disc:+qs('wDisc').value,yld:+qs('wYld').value,price:+qs('wPrice').value,seller:+qs('wSeller').value,recency:+qs('wRecency').value,net:+qs('wNet').value}; localStorage.setItem(LS_W, JSON.stringify(W)); closeScore(); render(false); }
+function resetWeights(){ W={disc:5,yld:6,price:2,seller:1,recency:1,net:5}; localStorage.setItem(LS_W, JSON.stringify(W)); syncWeightsUI(); render(false); }
+
+/* ===== Net Modal ===== */
+function openNet(){ syncExpensesUI(); netModal.classList.add('active'); netModal.setAttribute('aria-hidden','false'); }
+function closeNet(){ netModal.classList.remove('active'); netModal.setAttribute('aria-hidden','true'); }
+function syncExpensesUI(){ qs('pMgmt').value=EXP.mgmt; qs('pVac').value=EXP.vac; qs('pMaint').value=EXP.maint; qs('pTax').value=EXP.tax; qs('fixedAnnual').value=EXP.fixed; qs('renoOnce').value=EXP.reno; }
+function saveExpenses(){ EXP={ mgmt:+qs('pMgmt').value, vac:+qs('pVac').value, maint:+qs('pMaint').value, tax:+qs('pTax').value, fixed:+qs('fixedAnnual').value, reno:+qs('renoOnce').value }; localStorage.setItem(LS_EXP, JSON.stringify(EXP)); closeNet(); render(false); }
+function resetExpenses(){ EXP={mgmt:7,vac:5,maint:1.5,tax:0,fixed:0,reno:0}; localStorage.setItem(LS_EXP, JSON.stringify(EXP)); syncExpensesUI(); render(false); }
+
+/* ===== Smart Relax ===== */
+let _relaxed=null;
+function smartRelax(){
+  const before={ areas:[...selectedAreas], rooms:rooms.value, price:+priceR.value, y:+yieldR.value, kw:kw.value };
+  const logs=[];
+  function tryRender(){
+    render(false);
+    const count=document.querySelectorAll('.card').length;
+    logs.push(`→ ${count} תוצאות`);
+    return count>0;
+  }
+  relaxLog.innerHTML='';
+  logs.push('מצב התחלה');
+  let ok = tryRender();
+  if(!ok && selectedAreas.length && expandAreasCB.checked){ selectedAreas=[]; document.querySelectorAll('#chipBox .chip').forEach(c=>c.classList.remove('selected')); logs.push('שוחרר: אזורים → כל האזורים'); ok=tryRender(); }
+  let step=0;
+  while(!ok && step<8){ step++;
+    if(step===1){ yieldR.value=Math.max(0, +yieldR.value-2); yVal.textContent=yieldR.value; logs.push('שוחרר: תשואה מינ׳ −2%'); ok=tryRender(); if(ok) break; }
+    if(step===2){ priceR.value=Math.min(+priceR.max, +priceR.value+150000); pVal.textContent=Number(priceR.value).toLocaleString(); logs.push('שוחרר: מחיר עד +150K'); ok=tryRender(); if(ok) break; }
+    if(step===3){ rooms.value=''; logs.push('שוחרר: חדרים (הוסר סינון)'); ok=tryRender(); if(ok) break; }
+    if(step===4){ kw.value=''; logs.push('שוחרר: מילות מפתח (נוקו)'); ok=tryRender(); if(ok) break; }
+    if(step===5){ yieldR.value=Math.max(0, +yieldR.value-3); yVal.textContent=yieldR.value; logs.push('שוחרר: תשואה מינ׳ −3% נוספים'); ok=tryRender(); if(ok) break; }
+    if(step===6){ priceR.value=Math.min(+priceR.max, +priceR.value+200000); pVal.textContent=Number(priceR.value).toLocaleString(); logs.push('שוחרר: מחיר עד +200K נוספים'); ok=tryRender(); if(ok) break; }
+    if(step===7){ selectedAreas=[]; document.querySelectorAll('#chipBox .chip').forEach(c=>c.classList.remove('selected')); logs.push('שוחרר: אזורים → כל האזורים (כפול/גיבוי)'); ok=tryRender(); if(ok) break; }
+  }
+  relaxLog.innerHTML = logs.map(t=>`<li>${t}</li>`).join('');
+  _relaxed = {before, after:{ areas:[...selectedAreas], rooms:rooms.value, price:+priceR.value, y:+yieldR.value, kw:kw.value }};
+  relaxModal.classList.add('active'); relaxModal.setAttribute('aria-hidden','false');
+}
+function applyRelaxed(){ closeRelax(); render(false); }
+function closeRelax(){ relaxModal.classList.remove('active'); relaxModal.setAttribute('aria-hidden','true'); }
+
+/* ===== Search/Reset/Test ===== */
+function resetFilters(){ selectedAreas=[]; document.querySelectorAll('.chip').forEach(c=>c.classList.remove('selected')); rooms.selectedIndex=0; priceR.value=800000; pVal.textContent='800,000'; yieldR.value=12; yVal.textContent='12'; kw.value=''; sortSel.value='score'; render(false); }
+function run50Variations(){ const counts=[]; const prices=[400000,600000,800000,1000000,1500000,2000000]; const yields=[0,5,8,10,12,15,18]; const old={areas:[...selectedAreas], rooms:rooms.value, price:priceR.value, y:yieldR.value, k:kw.value, s:sortSel.value}; for(let i=0;i<50;i++){ selectedAreas=(i%3===0)?[]:[allAreas[i%allAreas.length]]; rooms.value=(i%5===0)?'':String((i%4)+2); priceR.value=prices[i%prices.length]; yieldR.value=yields[i%yields.length]; kw.value=(i%7===0)?'':(i%2===0?'חניה':'ים'); sortSel.value=['score','yield','discount','price','days'][i%5]; const maxPrice=+priceR.value; const minYield=+yieldR.value; const roomF=rooms.value.trim(); const kwStr=kw.value.trim().toLowerCase(); const areasActive = selectedAreas.length?selectedAreas:allAreas; const res=items.filter(p=>(!areasActive.length||areasActive.includes(p.area))&&(!roomF||String(p.rooms)===roomF)&&(p.price||0)<=maxPrice&&(p.yld||0)>=minYield&&(!kwStr||(`${p.title} ${p.addr} ${p.kw||''}`).toLowerCase().includes(kwStr))); counts.push(res.length); } selectedAreas=old.areas; rooms.value=old.rooms; priceR.value=old.price; pVal.textContent=Number(priceR.value).toLocaleString(); yieldR.value=old.y; yVal.textContent=old.y; kw.value=old.k; sortSel.value=old.s; render(false); const unique=[...new Set(counts)]; alert(unique.length<=2?('אזהרה: מעט וריאציות ('+unique.join(', ')+') – בדקו דאטה/סינון'):('בוצע: '+unique.length+' רמות שונות של תוצאות. תקין.')); }
+function search(){ render(true); }
+window.search=search; window.resetFilters=resetFilters; window.run50Variations=run50Variations;
+
+/* ===== Help open/close ===== */
+function openVerMgr(){ verModal.classList.add('active'); verModal.setAttribute('aria-hidden','false'); refreshVerTable(); const f=document.getElementById('verFile'); f.onchange=(e)=>{ const file=e.target.files[0]; if(!file) return; const r=new FileReader(); r.onload=ev=>{ try{ const arr=JSON.parse(String(ev.target.result||'[]')); if(!Array.isArray(arr)) throw new Error('קובץ לא תקין'); const cur=JSON.parse(localStorage.getItem(LS_KEY)||'[]'); localStorage.setItem(LS_KEY, JSON.stringify(arr.concat(cur))); refreshVerTable(); alert('יובאו '+arr.length+' גרסאות.'); }catch(err){ alert('שגיאה בייבוא: '+(err.message||err)); } }; r.readAsText(file,'utf-8'); } }
+function closeVerMgr(){ verModal.classList.remove('active'); verModal.setAttribute('aria-hidden','true'); }
+window.openVerMgr=openVerMgr; window.closeVerMgr=closeVerMgr;
+
+/* ===== Self Tests ===== */
+function runSelfTests(){
+  const out=[]; try{
+    out.push(typeof toggleArea==='function' && window.toggleArea===toggleArea ? '✅ toggleArea' : '❌ toggleArea');
+    const tmp=JSON.parse(localStorage.getItem(LS_KEY)||'[]'); localStorage.setItem(LS_KEY, JSON.stringify(tmp)); out.push('✅ LS_KEY');
+    const a={price:500000,yld:10,disc:20,seller:{ok:true},pub:new Date().toISOString()};
+    const b={price:500000,yld:15,disc:20,seller:{ok:true},pub:new Date().toISOString()};
+    const sA=scoreOf(a).score, sB=scoreOf(b).score; out.push(sB>=sA?'✅ scoring(yld)':'❌ scoring(yld)');
+    const net=netYieldPercent({price:500000,yld:12}); out.push(net<=12?'✅ net<=gross':'❌ net>gross');
+    out.push(typeof smartRelax==='function'?'✅ relax fn':'❌ relax fn');
+    selfTestBox.style.display='block'; selfTestBox.textContent='Self-Tests: '+out.join(' | ');
+    console.log('Self-Tests:', out.join(' | '));
+  }catch(e){ selfTestBox.style.display='block'; selfTestBox.textContent='Self-Tests Error: '+(e.message||e); console.error(e); }
+}
+</script>
+</body>
+</html>
